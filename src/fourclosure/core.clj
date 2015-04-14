@@ -150,3 +150,38 @@
 (true? (plaindrome? '(1 1 3 3 1 1)))
 (false? (plaindrome? '(:a :b :c)))
 
+; http://www.4clojure.com/problem/35 Local bindings
+(= 7 (let [x 5] (+ 2 x)))
+(= 7 (let [x 3, y 10] (- y x)))
+(= 7 (let [x 21] (let [y 3] (/ x y))))
+
+; http://www.4clojure.com/problem/36 Let it Be
+(= 10 (let [x 7 y 3 z 1] (+ x y)))
+(= 4 (let [x 7 y 3 z 1] (+ y z)))
+(= 1 (let [x 7 y 3 z 1] z))
+
+; http://www.4clojure.com/problem/37 Regular Expressions
+(= "ABC" (apply str (re-seq #"[A-Z]+" "bA1B3Ce ")))
+
+; http://www.4clojure.com/problem/64 Intro to Reduce
+(= 15 (reduce + [1 2 3 4 5]))
+(=  0 (reduce + []))
+(=  6 (reduce + 1 [2 3]))
+
+; http://www.4clojure.com/problem/57 Simple Recursion
+(= '(5 4 3 2 1) ((fn foo [x] (when (> x 0) (conj (foo (dec x)) x))) 5))
+
+; http://www.4clojure.com/problem/134 A nil key
+(defn a-nil-key? [k m]
+  (if (contains? m k)
+    (nil? (get m k))
+    false))
+(true?  (a-nil-key? :a {:a nil :b 2}))
+(false? (a-nil-key? :b {:a nil :b 2}))
+(false? (a-nil-key? :c {:a nil :b 2}))
+
+; http://www.4clojure.com/problem/38 Maximum value
+(defn max-value [& args] (reduce (fn [x y] (if (> x y) x y) ) args ))
+(= (max-value 1 8 3 4) 8)
+(= (max-value 30 20) 30)
+(= (max-value 45 67 11) 67)
