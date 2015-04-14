@@ -96,3 +96,57 @@
 (= (nth-element [:a :b :c] 0) :a)
 (= (nth-element [1 2 3 4] 1) 2)
 (= (nth-element '([1 2] [3 4] [5 6]) 2) [5 6])
+
+; http://www.4clojure.com/problem/22 Count a Sequence
+(defn count-a-sequence [s] (reduce (fn [x y] (inc x)) 0 s))
+(= (count-a-sequence '(1 2 3 3 1)) 5)
+(= (count-a-sequence "Hello World") 11)
+(= (count-a-sequence [[1 2] [3 4] [5 6]]) 3)
+(= (count-a-sequence '(13)) 1)
+(= (count-a-sequence '(:a :b :c)) 3)
+
+; http://www.4clojure.com/problem/23 Reverse a Sequence
+(defn reverse-a-sequence [coll]
+  (loop [[r & more :as all] (seq coll) acc '()]
+    (if all
+      (recur more (cons r acc))
+      acc)))
+(= (reverse-a-sequence [1 2 3 4 5]) [5 4 3 2 1])
+(= (reverse-a-sequence (sorted-set 5 7 2 7)) '(7 5 2))
+(= (reverse-a-sequence [[1 2][3 4][5 6]]) [[5 6][3 4][1 2]])
+
+; http://www.4clojure.com/problem/24 Sum It All Up
+(defn sum-it-all-up [coll] (reduce + coll))
+(= (sum-it-all-up [1 2 3]) 6)
+(= (sum-it-all-up (list 0 -2 5 5)) 8)
+(= (sum-it-all-up #{4 2 1}) 7)
+(= (sum-it-all-up '(0 0 -1)) -1)
+(= (sum-it-all-up '(1 10 3)) 14)
+
+; http://www.4clojure.com/problem/25 Find the odd numbers
+(defn find-the-odd-numbers [coll] (filter odd? coll))
+(= (find-the-odd-numbers #{1 2 3 4 5}) '(1 3 5))
+(= (find-the-odd-numbers [4 2 1 6]) '(1))
+(= (find-the-odd-numbers [2 2 4 6]) '())
+(= (find-the-odd-numbers [1 1 1 3]) '(1 1 1 3))
+
+; http://www.4clojure.com/problem/26 Fibonacci Sequence
+(defn bob-fib-seq [n]
+  (map (fn bob-fib [n]
+         (cond
+           (= n 0) 0
+           (= n 1) 1
+           :else (+ (bob-fib (- n 1)) (bob-fib (- n 2)))))
+       (range 1 (+ n 1))))
+(= (bob-fib-seq 3) '(1 1 2))
+(= (bob-fib-seq 6) '(1 1 2 3 5 8))
+(= (bob-fib-seq 8) '(1 1 2 3 5 8 13 21))
+
+; http://www.4clojure.com/problem/27 Palindrome Detector
+(defn plaindrome? [coll] (= (seq coll) (reverse coll)))
+(false? (plaindrome? '(1 2 3 4 5)))
+(true? (plaindrome? "racecar"))
+(true? (plaindrome? [:foo :bar :foo]))
+(true? (plaindrome? '(1 1 3 3 1 1)))
+(false? (plaindrome? '(:a :b :c)))
+
