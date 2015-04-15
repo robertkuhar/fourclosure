@@ -130,6 +130,11 @@
 (= (find-the-odd-numbers [2 2 4 6]) '())
 (= (find-the-odd-numbers [1 1 1 3]) '(1 1 1 3))
 
+; http://www.4clojure.com/problem/28 Flatten a Sequence
+; todo (= (__ '((1 2) 3 [4 [5 6]])) '(1 2 3 4 5 6))
+; todo (= (__ ["a" ["b"] "c"]) '("a" "b" "c"))
+; todo (= (__ '((((:a))))) '(:a))
+
 ; http://www.4clojure.com/problem/26 Fibonacci Sequence
 (defn bob-fib-seq [n]
   (map (fn bob-fib [n]
@@ -185,3 +190,15 @@
 (= (max-value 1 8 3 4) 8)
 (= (max-value 30 20) 30)
 (= (max-value 45 67 11) 67)
+
+; http://www.4clojure.com/problem/39 Interleave two Seqs
+(defn interleave-two-seqs [a b]
+  (loop [r [] a (seq a) b (seq b)]
+    (if (or (empty? a) (empty? b))
+      r
+      (recur (conj r (first a) (first b)) (rest a) (rest b)))))
+(= (interleave-two-seqs [1 2 3] [:a :b :c]) '(1 :a 2 :b 3 :c))
+(= (interleave-two-seqs [1 2] [3 4 5 6]) '(1 3 2 4))
+(= (interleave-two-seqs [1 2 3 4] [5]) [1 5])
+(= (interleave-two-seqs [30 20] [25 15]) [30 25 20 15])
+
