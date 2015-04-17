@@ -131,9 +131,28 @@
 (= (find-the-odd-numbers [1 1 1 3]) '(1 1 1 3))
 
 ; http://www.4clojure.com/problem/28 Flatten a Sequence
-; todo (= (__ '((1 2) 3 [4 [5 6]])) '(1 2 3 4 5 6))
-; todo (= (__ ["a" ["b"] "c"]) '("a" "b" "c"))
-; todo (= (__ '((((:a))))) '(:a))
+(defn bob-flatten [coll]
+  (let [[head & tail] coll]
+    (cond
+      (empty? coll) '()
+      (coll? head) (concat (bob-flatten head) (bob-flatten tail))
+      :else (cons head (bob-flatten tail)))))
+(= (bob-flatten '((1 2) 3 [4 [5 6]])) '(1 2 3 4 5 6))
+(= (bob-flatten ["a" ["b"] "c"]) '("a" "b" "c"))
+(= (bob-flatten '((((:a))))) '(:a))
+; I really struggled with this one;n interesting solution to "Flatten a Sequence"
+; I am puzzled as to how a reducer fn can have 2 arguments
+; lifted from https://github.com/ptrv/4clojure-solutions/blob/master/solutions.clj
+(fn [coll]
+  (seq
+    (reduce
+      (fn my-flatten [v e]
+        (if (coll? e)
+          (reduce my-flatten v e)
+          (conj v e)))
+      []
+      coll)))
+
 
 ; http://www.4clojure.com/problem/26 Fibonacci Sequence
 (defn bob-fib-seq [n]
