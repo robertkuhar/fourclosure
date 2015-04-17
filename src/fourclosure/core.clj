@@ -153,6 +153,11 @@
       []
       coll)))
 
+; http://www.4clojure.com/problem/29 Get the Caps
+(defn get-the-caps [s] (apply str (re-seq #"[A-Z]" (str s))))
+(= (get-the-caps "HeLlO, WoRlD!") "HLOWRD")
+(= (get-the-caps "HeLlO, WoRlD!") "HLOWRD")
+(= (get-the-caps "$#A(*&987Zf") "AZ")
 
 ; http://www.4clojure.com/problem/26 Fibonacci Sequence
 (defn bob-fib-seq [n]
