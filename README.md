@@ -1,6 +1,6 @@
 # fourclosure
 
-A Clojure library recording my efforts at http://www.4clojure.com/
+A Clojure library recording my efforts at http://www.4clojure.com/ where I am http://www.4clojure.com/user/bannerad
 
 ## Usage
 
